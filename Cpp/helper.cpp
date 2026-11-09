@@ -47,23 +47,23 @@ void processInput(GLFWwindow *win)
     if (pause == 0) {
         if (glfwGetKey(win, GLFW_KEY_W) == GLFW_PRESS)
             if ((car->yOff <0.3f && potionFactor == 1.0f) || (car->yOff > -1.0 && potionFactor == -1.0f )) {
-                car->yOff+= 0.01f*potionFactor;
-                car->hitbox.y += 0.01f*potionFactor;
+                car->yOff+= 0.6f*deltaTime*potionFactor;
+                car->hitbox.y += 0.6f*deltaTime*potionFactor;
             }
         if (glfwGetKey(win, GLFW_KEY_S) == GLFW_PRESS)
             if ((car->yOff > -1.0 && potionFactor == 1.0f) || (car->yOff <0.3f && potionFactor == -1.0f )) {
-                car->yOff-= 0.01f*potionFactor;
-                car->hitbox.y -= 0.01f*potionFactor;
+                car->yOff-= 0.6f*deltaTime*potionFactor;
+                car->hitbox.y -= 0.6f*deltaTime*potionFactor;
             }
         if (glfwGetKey(win, GLFW_KEY_A) == GLFW_PRESS)
             if ((car->xOff > -0.95f + 1.0/13 && potionFactor==1.0f) || (car->xOff <  0.95f - 1.0/13 - 0.4*aspect && potionFactor == -1.0f)) {
-                car->xOff-= 0.01f*aspect*potionFactor;
-                car->hitbox.x -= 0.01f*aspect*potionFactor;
+                car->xOff-= 0.6f*deltaTime*aspect*potionFactor;
+                car->hitbox.x -= 0.6f*deltaTime*aspect*potionFactor;
             }
         if (glfwGetKey(win, GLFW_KEY_D) == GLFW_PRESS)
             if ((car->xOff <  0.95f - 1.0/13 - 0.4*aspect && potionFactor==1.0f) || (car->xOff > -0.95f + 1.0/13 && potionFactor == -1.0f)) {
-                car->xOff+= 0.01f*aspect*potionFactor;
-                car->hitbox.x+=0.01f*aspect*potionFactor;
+                car->xOff+= 0.6f*deltaTime*aspect*potionFactor;
+                car->hitbox.x+=0.6f*deltaTime*aspect*potionFactor;
             }
     }
     if (glfwGetKey(win, GLFW_KEY_P) == GLFW_PRESS && !lastKeys[0]) {

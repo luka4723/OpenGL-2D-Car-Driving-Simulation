@@ -1,4 +1,5 @@
 #include "object.hpp"
+#include <algorithm>
 #include <iostream>
 #include "glm/ext/matrix_transform.hpp"
 #include "helper.hpp"
@@ -18,10 +19,19 @@ object::object(const char* id, const float xOff, const float yOff, const float* 
     EBO::Unbind();
     this->fall = fall;
 }
+object::~object() {
+    vao->Delete();
+    vbo->Delete();
+    ebo->Delete();
+    delete vao;
+    delete vbo;
+    delete ebo;
+}
+
 void object::draw() {
     if (this->ime != "auto") {
-        this->yOff -= fall;
-        this->hitbox.y -= fall;
+        this->yOff -= fall*deltaTime;
+        this->hitbox.y -= fall*deltaTime;
         if (this->yOff < -1.5f) {
             if (this->ime == "raketa" || this->ime == "mud") dangers.erase(std::remove(dangers.begin(), dangers.end(), this), dangers.end());
             else pickups.erase(std::remove(pickups.begin(), pickups.end(), this), pickups.end());

@@ -1,6 +1,12 @@
 # Car Driving Simulation
 
-A 2D graphics project demonstrating real-time rendering techniques, particle systems, framebuffer effects, and stencil-based rendering. The player controls a car while collecting randomly generated objects that trigger different visual and gameplay effects.
+A 2D graphics project in C++ and OpenGL 3.3 demonstrating real-time rendering techniques, particle systems, framebuffer effects, and stencil-based rendering. The player controls a car while collecting randomly generated objects that trigger different visual and gameplay effects.
+
+<p align="center">
+  <img src="media/demo.gif" alt="Driving, the mushroom colour effect, pause with inverted colours, the spiral blur and mud stains" width="540">
+</p>
+
+The full demo video is in [`media/demo.mp4`](media/demo.mp4).
 
 ## Features
 
@@ -51,13 +57,36 @@ Objects are randomly generated on the road and can be collected by the player:
 ### Procedural Road Generation
 - The road is generated dynamically by randomly selecting and placing tiles.
 
-## Demo
+## Controls
 
-![Demo](domaci1-demo.mp4)
+| Key | Action |
+|---|---|
+| W A S D | drive |
+| P | pause |
+| R | rotate the scene |
+| Esc | quit |
 
-## Building and Running
+## Building
 
-1. Open the project using CMake.
-2. Configure and build the project.
-3. Run the generated executable (`main`).
+Requirements: CMake 3.14 or newer, a C++17 compiler and a GPU with OpenGL 3.3. GLFW and GLM are downloaded by CMake; GLAD and stb_image are included in the repository.
+
+```bash
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release
+```
+
+On Linux, GLFW needs the X11 development packages, for example on Ubuntu:
+
+```bash
+sudo apt install libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev
+```
+
+## Running
+
+The build copies the shaders (`Glsls/`) and the textures (`resources/`) into the build folder, and the program loads them with relative paths, so run it from there:
+
+```bash
+cd build
+./car_driving
+```
 

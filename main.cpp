@@ -157,7 +157,7 @@ int main() {
 					texpos = 16;
 				}
 				verts = makeArray(object_sizex, object_sizey, texpos);
-				auto* obj = new object(ime, -0.83f+random(0,148)/100,1.0f, verts.data(), carIndices, sizeof(float)*verts.size(),sizeof(carIndices),0.2f*deltaTime*speedMult);
+				auto* obj = new object(ime, -0.83f+random(0,148)/100,1.0f, verts.data(), carIndices, sizeof(float)*verts.size(),sizeof(carIndices),0.2f*speedMult);
 				float hb_x = obj->xOff+0.03f;
 				float hb_y = obj->yOff+0.01f;
 				float hb_w = 0.19f*aspect;
@@ -188,7 +188,7 @@ int main() {
 					//texpos=random(1,2);
 					const char* ime = nullptr;
 					verts = makeArray(object_sizex, object_sizey, random(17,17));
-					auto* obj = new object("raketa", -0.9f+random(1,157)/100,1.0f, verts.data(), carIndices, sizeof(float)*verts.size(),sizeof(carIndices),0.5f*deltaTime*speedMult);
+					auto* obj = new object("raketa", -0.9f+random(1,157)/100,1.0f, verts.data(), carIndices, sizeof(float)*verts.size(),sizeof(carIndices),0.5f*speedMult);
 					obj->setHitbox(obj->xOff+0.095f,obj->yOff,0.07f*aspect,0.23f);
 					dangers.push_back(obj);
 				}
@@ -209,10 +209,10 @@ int main() {
 			if (currentFrame - prevPotion >= 5.0f) potionFactor = 1.0f;
 			if (currentFrame - prevSpeed >= 10.0f) {
 				speedMult+=0.2f;
-				for (object* obj : pickups) obj->fall = 0.2f*deltaTime*speedMult;
+				for (object* obj : pickups) obj->fall = 0.2f*speedMult;
 				for (object* obj : dangers) {
-					if (obj->ime == "raketa") obj->fall = 0.5f*deltaTime*speedMult;
-					else obj->fall = 0.2f*deltaTime*speedMult;
+					if (obj->ime == "raketa") obj->fall = 0.5f*speedMult;
+					else obj->fall = 0.2f*speedMult;
 				}
 				prevSpeed = currentFrame;
 			}
@@ -270,8 +270,9 @@ int main() {
 			}
 
 			car->draw();
-			for (object* obj : pickups) obj->draw();
-			for (object* obj : dangers) obj->draw();
+			// iterate over copies: draw() removes and deletes objects that leave the screen
+			for (object* obj : std::vector<object*>(pickups)) obj->draw();
+			for (object* obj : std::vector<object*>(dangers)) obj->draw();
 			checkCollisions();
 
 			for (auto & p : particles) {
@@ -315,8 +316,6 @@ int main() {
 	}
 
 	delete car;
-	delete myShader;
-	delete screenShader;
 
 	VAO1.Delete();
     map1.Delete();
@@ -324,6 +323,8 @@ int main() {
 	map2.Delete();
     myShader->Delete();
 	screenShader->Delete();
+	delete myShader;
+	delete screenShader;
 	smokeShader.Delete();
 	stencilShader.Delete();
     map_tileset.Delete();

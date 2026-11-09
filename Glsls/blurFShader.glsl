@@ -9,7 +9,7 @@ const int sampleCount = 20;
 
 void main()
 {
-    vec4 sum = vec4(0.0); // analogno rc,gc,bc
+    vec4 sum = vec4(0.0); // analogous to rc,gc,bc
     vec2 size = vec2(1.0 /(9*32*3), 1.0 / (6*32*3));
 
     for(float i=0;i<20;i++)

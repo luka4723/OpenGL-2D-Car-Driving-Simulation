@@ -16,9 +16,10 @@ class object {
         EBO* ebo;
         float xOff;
         float yOff;
-        hitbox hitbox{};
+        ::hitbox hitbox{};
         float fall;
         object(const char *id, float xOff, float yOff, const float *vertices, const GLuint *indices, GLsizeiptr vertSize,GLsizeiptr indSize, float fall);
+        ~object();
 
         void setHitbox(float x, float y, float w, float h);
 
